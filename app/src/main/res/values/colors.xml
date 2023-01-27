@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#CBBA7B</color>
+
+
+    <color name="dart_white">#EDEADE</color>
+    <color name="dart_beige">#CBBA7B</color>
+    <color name="dart_green">#215C32</color>
+    <color name="dart_black">#272626</color>
+    <color name="dart_red">#7E2626</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="purple_500">#000000</color>
+</resources>
