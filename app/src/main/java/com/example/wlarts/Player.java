@@ -20,7 +20,7 @@ public class Player {
     private TextView last_throw_display;
     private LinearLayout dashboard;
 
-    public Player(int id, String name, int starting_points){
+    public Player(int id, String name, int starting_points) {
         this.id = id;
         this.name = name;
         this.average = 0;
@@ -28,8 +28,7 @@ public class Player {
         this.points_left = starting_points;
     }
 
-    public void enterScore(int score)
-    {
+    public void enterScore(int score) {
         this.darts_thrown.add(score);
         // Score
         this.points_left -= score;
@@ -39,7 +38,7 @@ public class Player {
         if (this.darts_thrown.size() < 1)
             last_throw += "";
         else
-            last_throw += String.valueOf(this.darts_thrown.get(this.darts_thrown.size()-1));
+            last_throw += String.valueOf(this.darts_thrown.get(this.darts_thrown.size() - 1));
 
         last_throw_display.setText(last_throw);
         computeAverage();
@@ -48,53 +47,49 @@ public class Player {
         average_display.setText(df.format(this.average));
     }
 
-    public void computeAverage(){
+    public void computeAverage() {
 
         float total = 0;
-        if(darts_thrown.size() > 0) {
+        if (darts_thrown.size() > 0) {
             for (int i = 0; i < darts_thrown.size(); i++) {
                 total += darts_thrown.get(i);
             }
             this.average = (total / darts_thrown.size());
-        }
-        else
-            this.average =  0.00f;
+        } else
+            this.average = 0.00f;
     }
 
-    public int abc()
-    {
+    public int abc() {
         return this.darts_thrown.size();
     }
 
-    public int getId(){
+    public int getId() {
         return this.id;
     }
 
-    public void registerPoints(int points){
+    public void registerPoints(int points) {
         this.points_left -= points;
     }
 
-    public int getPointsLeft(){
+    public int getPointsLeft() {
         return this.points_left;
     }
 
-    public void setPlayersTurn()
-    {
+    public void setPlayersTurn() {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         params.setMargins(0, 0, 0, 0);
         this.dashboard.setLayoutParams(params);
         this.dashboard.setBackgroundColor(Color.parseColor("#7E2626"));
-        this.dashboard.setPadding(20,20,20,20);
+        this.dashboard.setPadding(20, 20, 20, 20);
     }
 
 
-    public void setNotPlayersTurn()
-    {
+    public void setNotPlayersTurn() {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         params.setMargins(10, 10, 10, 10);
         this.dashboard.setLayoutParams(params);
         this.dashboard.setBackgroundColor(Color.parseColor("#272626"));
-        this.dashboard.setPadding(0,0,0,0);
+        this.dashboard.setPadding(0, 0, 0, 0);
     }
 
 
@@ -161,10 +156,9 @@ public class Player {
         this.average_display = average_display;
     }
 
-    public void deleteLastScore()
-    {
-        int last_score = darts_thrown.get(darts_thrown.size()-1);
-        this.darts_thrown.remove(darts_thrown.size()-1);
+    public void deleteLastScore() {
+        int last_score = darts_thrown.get(darts_thrown.size() - 1);
+        this.darts_thrown.remove(darts_thrown.size() - 1);
         this.points_left += last_score;
         this.score_display.setText(String.valueOf(this.points_left));
 
@@ -172,7 +166,7 @@ public class Player {
         if (this.darts_thrown.size() < 1)
             last_throw += "";
         else
-            last_throw += String.valueOf(this.darts_thrown.get(this.darts_thrown.size()-1));
+            last_throw += String.valueOf(this.darts_thrown.get(this.darts_thrown.size() - 1));
 
         last_throw_display.setText(last_throw);
         computeAverage();
@@ -181,8 +175,7 @@ public class Player {
         average_display.setText(df.format(this.average));
     }
 
-    public int getNumberOfThrows()
-    {
+    public int getNumberOfThrows() {
         return this.darts_thrown.size();
     }
 

@@ -13,7 +13,6 @@
         android:orientation="vertical">
 
 
-
         <LinearLayout
             android:background="@color/dart_black"
             android:id="@+id/dashboard_placeholder"
@@ -21,7 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="10">
-
 
 
         </LinearLayout>
@@ -91,6 +89,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
+
             <LinearLayout
                 android:background="@color/dart_beige"
                 android:orientation="vertical"
@@ -338,7 +337,6 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
                 </LinearLayout>
 
                 <!-- 7,8,9 -->
@@ -417,8 +415,7 @@
                             android:padding="5sp"
                             app:tint="@color/dart_red" />
 
-                       </androidx.constraintlayout.widget.ConstraintLayout>
-
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                 </LinearLayout>
@@ -426,12 +423,9 @@
             </LinearLayout>
 
 
-
-
         </LinearLayout>
 
     </LinearLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

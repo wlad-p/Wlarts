@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -42,12 +43,36 @@ public class MainActivity extends AppCompatActivity {
     private static final int CAMERA_REQUEST = 1888;
     private ImageView imageView;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
+    public static MediaPlayer[] media_players = new MediaPlayer[181];
+    private int player_photo_id;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        // Initialize Media Player for Sound Effects
+        for (int i = 0; i < 181; i++) {
+            media_players[i] = new MediaPlayer();
+            int resId = getResources().getIdentifier("sound_" + i, "raw", getPackageName());
+            Uri soundUri = Uri.parse("android.resource://" + getPackageName() + "/" + resId);
+            try {
+                media_players[i].setDataSource(getApplicationContext(), soundUri);
+                media_players[i].prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        for (MediaPlayer mp : media_players) {
+            mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    mp.release();
+                }
+            });
+        }
 
 
         LinearLayout player_selection = (LinearLayout) findViewById(R.id.player_selection);
@@ -57,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         delete_player.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(player_selection.getChildCount() > 1)
+                if (player_selection.getChildCount() > 1)
                     player_selection.removeView(new_player_layout);
             }
         });
@@ -66,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         add_player.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(player_selection.getChildCount() < 4) {
+                if (player_selection.getChildCount() < 4) {
                     View new_player_layout = getLayoutInflater().inflate(R.layout.new_player_helper, null);
                     ConstraintLayout add_photo = (ConstraintLayout) new_player_layout.findViewById(R.id.add_photo);
 
@@ -77,12 +102,9 @@ public class MainActivity extends AppCompatActivity {
                         public void onClick(View view) {
 
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-                                {
+                                if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                                     requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
-                                }
-                                else
-                                {
+                                } else {
                                     Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                                     startActivityForResult(cameraIntent, CAMERA_REQUEST);
                                 }
@@ -115,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
 
                 ArrayList<String> players_names = new ArrayList<>();
 
-                for( int i=0; i < player_selection.getChildCount(); i++){
+                for (int i = 0; i < player_selection.getChildCount(); i++) {
                     View v = player_selection.getChildAt(i);
                     EditText name_input = (EditText) v.findViewById(R.id.player_name);
                     name_input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -146,19 +168,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
-    {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == MY_CAMERA_PERMISSION_CODE)
-        {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            {
+        if (requestCode == MY_CAMERA_PERMISSION_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, CAMERA_REQUEST);
-            }
-            else
-            {
+            } else {
                 Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show();
             }
         }
@@ -175,7 +192,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
     }
 }
