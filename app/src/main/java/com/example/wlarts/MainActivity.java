@@ -12,7 +12,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imageView;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
     public static MediaPlayer[] media_players = new MediaPlayer[181];
+
     private int player_photo_id;
 
     @SuppressLint("MissingInflatedId")
@@ -52,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+/*
         // Initialize Media Player for Sound Effects
         for (int i = 0; i < 181; i++) {
             media_players[i] = new MediaPlayer();
@@ -73,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+
+ */
 
 
         LinearLayout player_selection = (LinearLayout) findViewById(R.id.player_selection);

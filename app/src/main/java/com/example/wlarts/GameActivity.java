@@ -7,6 +7,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,6 +32,12 @@ public class GameActivity extends AppCompatActivity {
     ArrayList<String> players_names;
     LinearLayout dashboard;
 
+
+    private SoundPool soundPool;
+    private int[] soundIDs;
+    private int loadedSounds = 0;
+
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +48,25 @@ public class GameActivity extends AppCompatActivity {
             players_names = extras.getStringArrayList("players_names");
             //The key argument here must match that used in the other activity;
         }
+
+        // Initialize the SoundPool
+        soundPool = new SoundPool.Builder().build();
+
+        // Load the sound files
+        soundIDs = new int[180];
+        for (int i = 0; i < 180; i++) {
+            int resourceId = getResources().getIdentifier("wlad_sound_" + (i + 1), "raw", getPackageName());
+            soundIDs[i] = soundPool.load(this, resourceId, 1);
+            soundPool.setOnLoadCompleteListener((soundPool, sampleId, status) -> {
+                loadedSounds++;
+                if (loadedSounds == 200) {
+
+                }
+            });
+        }
+
+
+
 
 
         // Init Game
@@ -93,7 +120,8 @@ public class GameActivity extends AppCompatActivity {
                 else {
                     game.enterScore(points);
                     try {
-                        MainActivity.media_players[points].start();
+                        soundPool.play(soundIDs[points - 1], 1.0f, 1.0f, 1, 0, 1.0f);
+
                     } catch (IllegalStateException e) {
                         e.printStackTrace();
                     }
